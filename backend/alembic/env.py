@@ -7,7 +7,12 @@ from alembic import context
 
 import sys
 from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parents[1] / "app"))
+
+# Ensure the backend package is discoverable when running Alembic commands.
+# We need to add the parent directory of ``app`` to ``sys.path`` so that
+# ``import app.*`` works correctly regardless of the current working
+# directory.
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from app.config import get_settings
 from app.database import Base
