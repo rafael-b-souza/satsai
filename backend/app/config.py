@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     project_name: str = "SatsAi API"
     lnbits_url: str = "http://localhost:5000"
     lnbits_key: str = ""
+    database_url: str = "sqlite:///./satsai.db"
 
     class Config:
         env_file = ".env"
@@ -12,3 +13,4 @@ class Settings(BaseSettings):
 
 def get_settings() -> Settings:
     return Settings()
+
