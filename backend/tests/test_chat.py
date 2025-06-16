@@ -36,3 +36,27 @@ def test_chat_no_balance(monkeypatch):
         stream=True,
     )
     assert r.status_code == 402
+
+def test_chat_deduct_after_stream(monkeypatch):
+    calls: list[int] = []
+
+    def dummy_stream(messages):
+        for part in ["foo", "bar", "baz"]:
+            yield part
+
+    def record_deduct(self, sid, tokens):
+        calls.append(tokens)
+
+    monkeypatch.setattr(usage_module.UsageService, "has_balance", lambda self, sid, tok: True)
+    monkeypatch.setattr(usage_module.UsageService, "deduct", record_deduct)
+    monkeypatch.setattr(OpenAIClient, "stream_chat", dummy_stream)
+
+    r = client.post(
+        "/api/v1/chat/?session_id=1",
+        json=[],
+        stream=True,
+    )
+    assert r.status_code == 200
+    # consume stream so generator finishes
+    _ = b"".join(r.iter_bytes())
+    assert calls == [3]
