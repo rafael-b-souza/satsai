@@ -7,18 +7,27 @@ export default function Pay() {
   const amount = 100
   const [invoice, setInvoice] = useState('')
   const [hash, setHash] = useState('')
-  const { setBalance, setSessionId } = useSession()
+  const { setBalance, setSessionId, sessionId } = useSession()
   const navigate = useNavigate()
 
   useEffect(() => {
     const load = async () => {
       try {
-        const r = await fetch(`/api/v1/payments/invoice?amount=${amount}&memo=credits`)
+        let id = sessionId
+        if (!id) {
+          const s = await fetch('/api/v1/sessions', { method: 'POST' })
+          if (!s.ok) return
+          const session = await s.json()
+          id = session.id
+          setSessionId(id)
+        }
+        const r = await fetch(
+          `/api/v1/payments/invoice?amount=${amount}&memo=credits&session_id=${id}`,
+        )
         if (!r.ok) return
         const data = await r.json()
         setInvoice(data.payment_request)
         setHash(data.payment_hash)
-        setSessionId(1)
       } catch {
         // ignore
       }

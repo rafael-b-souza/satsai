@@ -20,10 +20,21 @@ class DummyService:
         return {"paid": True}
 
 
+def test_create_session():
+    r = client.post("/api/v1/sessions")
+    assert r.status_code == 200
+    assert "id" in r.json()
+
+
 def test_create_invoice(monkeypatch):
     dummy = DummyService()
     monkeypatch.setattr(InvoiceService, "create", dummy.create)
-    r = client.post("/api/v1/payments/invoice?amount=10&memo=test")
+    s = client.post("/api/v1/sessions")
+    assert s.status_code == 200
+    session_id = s.json()["id"]
+    r = client.post(
+        f"/api/v1/payments/invoice?amount=10&memo=test&session_id={session_id}"
+    )
     assert r.status_code == 200
     assert r.json()["payment_request"] == "lnbc1dummy"
 
