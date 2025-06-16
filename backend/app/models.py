@@ -22,6 +22,7 @@ class Payment(Base):
     id = Column(Integer, primary_key=True)
     session_id = Column(Integer, ForeignKey("sessions.id"), nullable=False)
     payment_hash = Column(String, unique=True, nullable=False)
+    payment_request = Column(String, nullable=True)
     amount = Column(Integer, nullable=False)
     paid = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
