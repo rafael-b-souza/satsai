@@ -12,23 +12,25 @@ service = InvoiceService()
 @router.post("/invoice")
 async def create_invoice(
     amount: int,
+    session_id: int,
     memo: str = "",
-    request: Request = None,
+    request: Request | None = None,
     db: Session = Depends(get_db),
 ):
-    webhook = str(request.url_for("payment_notify"))
+    webhook = str(request.url_for("payment_notify")) if request else None
     try:
         invoice = service.create(amount, memo, webhook)
     except Exception as e:
         raise HTTPException(status_code=502, detail=str(e))
 
-    session = models.Session()
-    db.add(session)
-    db.commit()
-    db.refresh(session)
+    session = (
+        db.query(models.Session).filter(models.Session.id == session_id).first()
+    )
+    if not session:
+        raise HTTPException(status_code=404, detail="session not found")
 
     payment = models.Payment(
-        session_id=session.id,
+        session_id=session_id,
         payment_hash=invoice["payment_hash"],
         payment_request=invoice.get("payment_request"),
         amount=amount,
