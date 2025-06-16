@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
 from app.main import app
 from app.services.invoice import InvoiceService
+from app.database import SessionLocal, engine, Base
+from app import models
 
 client = TestClient(app)
 
@@ -34,9 +36,26 @@ def test_check_invoice(monkeypatch):
     assert r.json()["paid"] is True
 
 
-def test_webhook():
+def test_webhook(monkeypatch):
+    Base.metadata.create_all(engine)
+    db = SessionLocal()
+    sess = models.Session()
+    db.add(sess)
+    db.commit()
+    db.refresh(sess)
+
+    payment = models.Payment(
+        session_id=sess.id, payment_hash="hash", amount=10, paid=False
+    )
+    db.add(payment)
+    db.commit()
+
+    dummy = DummyService()
+    monkeypatch.setattr(InvoiceService, "check", dummy.check)
+
     payload = {"payment_hash": "hash"}
     r = client.post("/api/v1/payments/notify", json=payload)
     assert r.status_code == 200
-    assert r.json()["status"] == "received"
-    assert r.json()["payload"] == payload
+    assert r.json()["ok"] is True
+    db.refresh(payment)
+    assert payment.paid is True
