@@ -1,3 +1,6 @@
+import { useSession } from '../store'
+
 export default function Chat() {
-  return <div>Chat UI coming soon.</div>
+  const { balance } = useSession()
+  return <div>Chat UI coming soon. Balance: {balance} sats</div>
 }
