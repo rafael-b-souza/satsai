@@ -14,7 +14,7 @@ async def create_invoice(
     amount: int,
     session_id: int,
     memo: str = "",
-    request: Request | None = None,
+    request: Request = None,
     db: Session = Depends(get_db),
 ):
     webhook = str(request.url_for("payment_notify")) if request else None
