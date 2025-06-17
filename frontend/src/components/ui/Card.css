@@ -1,0 +1,3 @@
+.ui-card {
+  @apply border border-secondary rounded p-sm;
+}

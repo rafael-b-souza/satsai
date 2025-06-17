@@ -1,5 +1,7 @@
 import { useState, useRef, FormEvent } from 'react'
 import { useSession } from '../store'
+import Button from '../components/ui/Button'
+import Card from '../components/ui/Card'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -64,9 +66,9 @@ export default function Chat() {
 
   return (
     <div className="space-y-sm">
-      <div
+      <Card
         ref={displayRef}
-        className="border border-secondary rounded p-sm h-80 overflow-y-auto space-y-xs"
+        className="h-80 overflow-y-auto space-y-xs"
       >
         {messages.map((m, i) => (
           <p
@@ -76,7 +78,7 @@ export default function Chat() {
             {m.content}
           </p>
         ))}
-      </div>
+      </Card>
       <form onSubmit={handleSubmit} className="flex space-x-xs">
         <input
           className="flex-grow border border-secondary rounded px-sm py-xs"
@@ -84,9 +86,9 @@ export default function Chat() {
           onChange={(e) => setInput(e.target.value)}
           disabled={loading}
         />
-        <button className="border border-secondary px-sm" type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="px-sm">
           Send
-        </button>
+        </Button>
       </form>
       <p>Balance: {balance} sats</p>
     </div>

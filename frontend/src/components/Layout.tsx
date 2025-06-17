@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useDarkMode } from '../hooks/useDarkMode'
+import Button from './ui/Button'
 
 export default function Layout() {
   const { dark, toggleDark } = useDarkMode()
@@ -11,9 +12,9 @@ export default function Layout() {
           <NavLink to="/pay" className={({isActive}) => isActive ? 'font-bold' : ''}>Pay</NavLink>
           <NavLink to="/chat" className={({isActive}) => isActive ? 'font-bold' : ''}>Chat</NavLink>
         </nav>
-        <button onClick={toggleDark} className="px-xs py-xs border border-secondary rounded">
+        <Button onClick={toggleDark} className="px-xs py-xs">
           {dark ? 'Light' : 'Dark'}
-        </button>
+        </Button>
       </header>
       <main className="p-sm">
         <Outlet />

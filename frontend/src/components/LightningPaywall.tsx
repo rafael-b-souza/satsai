@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import Card from './ui/Card'
+import Button from './ui/Button'
 
 export type PaywallProps = {
   invoice: string
@@ -47,12 +49,12 @@ export default function LightningPaywall({ invoice, paymentHash: _paymentHash, p
           alt="invoice qr"
         />
       </div>
-      <div className="break-all text-center border border-secondary p-xs rounded bg-secondary">
+      <Card className="break-all text-center bg-secondary p-xs">
         {invoice}
-      </div>
-      <button onClick={copy} className="px-sm py-xs border border-secondary rounded w-full">
+      </Card>
+      <Button onClick={copy} className="w-full">
         Copy Invoice
-      </button>
+      </Button>
       {paid && <p className="text-success">Payment confirmed for {amount} sats!</p>}
     </div>
   )
