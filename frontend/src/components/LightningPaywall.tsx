@@ -8,7 +8,8 @@ export type PaywallProps = {
   onPaid: () => void
 }
 
-export default function LightningPaywall({ invoice, paymentHash, pollUrl, amount, onPaid }: PaywallProps) {
+export default function LightningPaywall({ invoice, paymentHash: _paymentHash, pollUrl, amount, onPaid }: PaywallProps) {
+  void _paymentHash
   const [paid, setPaid] = useState(false)
 
   useEffect(() => {
@@ -39,20 +40,20 @@ export default function LightningPaywall({ invoice, paymentHash, pollUrl, amount
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-sm">
       <div className="flex justify-center">
         <img
           src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(invoice)}`}
           alt="invoice qr"
         />
       </div>
-      <div className="break-all text-center border p-2 rounded bg-gray-100 dark:bg-gray-800">
+      <div className="break-all text-center border border-secondary p-xs rounded bg-secondary">
         {invoice}
       </div>
-      <button onClick={copy} className="px-4 py-2 border rounded w-full">
+      <button onClick={copy} className="px-sm py-xs border border-secondary rounded w-full">
         Copy Invoice
       </button>
-      {paid && <p className="text-green-600">Payment confirmed for {amount} sats!</p>}
+      {paid && <p className="text-success">Payment confirmed for {amount} sats!</p>}
     </div>
   )
 }

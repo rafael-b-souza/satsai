@@ -63,10 +63,10 @@ export default function Chat() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-sm">
       <div
         ref={displayRef}
-        className="border rounded p-4 h-80 overflow-y-auto space-y-2"
+        className="border border-secondary rounded p-sm h-80 overflow-y-auto space-y-xs"
       >
         {messages.map((m, i) => (
           <p
@@ -77,14 +77,14 @@ export default function Chat() {
           </p>
         ))}
       </div>
-      <form onSubmit={handleSubmit} className="flex space-x-2">
+      <form onSubmit={handleSubmit} className="flex space-x-xs">
         <input
-          className="flex-grow border rounded px-2 py-1"
+          className="flex-grow border border-secondary rounded px-sm py-xs"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={loading}
         />
-        <button className="border px-4" type="submit" disabled={loading}>
+        <button className="border border-secondary px-sm" type="submit" disabled={loading}>
           Send
         </button>
       </form>
