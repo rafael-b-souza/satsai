@@ -22,7 +22,7 @@ export default function Chat() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (!input.trim() || !sessionId || loading) return
-    const newMessages = [...messages, { role: 'user', content: input }]
+    const newMessages: Message[] = [...messages, { role: 'user', content: input }]
     setMessages(newMessages)
     setInput('')
     setLoading(true)
@@ -68,7 +68,8 @@ export default function Chat() {
     <div className="space-y-sm">
       <Card
         ref={displayRef}
-        className="h-80 overflow-y-auto space-y-xs"
+        className="min-h-[20rem] max-h-[60vh] overflow-y-auto space-y-xs"
+        style={{ minHeight: '20rem', maxHeight: '60vh', overflowY: 'auto' }}
       >
         {messages.map((m, i) => (
           <p
