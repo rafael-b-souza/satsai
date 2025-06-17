@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { useDarkMode } from '../hooks/useDarkMode'
+import clsx from 'clsx'
 import Button from './ui/Button'
 
 export default function Layout() {
@@ -8,9 +9,30 @@ export default function Layout() {
     <div className="min-h-screen bg-primary text-secondary">
       <header className="p-sm border-b border-secondary flex justify-between">
         <nav className="space-x-4">
-          <NavLink to="/" className={({isActive}) => isActive ? 'font-bold' : ''}>Home</NavLink>
-          <NavLink to="/pay" className={({isActive}) => isActive ? 'font-bold' : ''}>Pay</NavLink>
-          <NavLink to="/chat" className={({isActive}) => isActive ? 'font-bold' : ''}>Chat</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              clsx(isActive && 'font-bold', 'focus:ring outline-none')
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/pay"
+            className={({ isActive }) =>
+              clsx(isActive && 'font-bold', 'focus:ring outline-none')
+            }
+          >
+            Pay
+          </NavLink>
+          <NavLink
+            to="/chat"
+            className={({ isActive }) =>
+              clsx(isActive && 'font-bold', 'focus:ring outline-none')
+            }
+          >
+            Chat
+          </NavLink>
         </nav>
         <Button onClick={toggleDark} className="px-xs py-xs">
           {dark ? 'Light' : 'Dark'}

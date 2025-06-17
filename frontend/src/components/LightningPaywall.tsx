@@ -13,6 +13,7 @@ export type PaywallProps = {
 export default function LightningPaywall({ invoice, paymentHash: _paymentHash, pollUrl, amount, onPaid }: PaywallProps) {
   void _paymentHash
   const [paid, setPaid] = useState(false)
+  const status = paid ? `Payment confirmed for ${amount} sats!` : ''
 
   useEffect(() => {
     if (paid) return
@@ -55,7 +56,9 @@ export default function LightningPaywall({ invoice, paymentHash: _paymentHash, p
       <Button onClick={copy} className="w-full">
         Copy Invoice
       </Button>
-      {paid && <p className="text-success">Payment confirmed for {amount} sats!</p>}
+      <div aria-live="polite" className="text-success h-5" role="status">
+        {status}
+      </div>
     </div>
   )
 }

@@ -79,9 +79,13 @@ export default function Chat() {
           </p>
         ))}
       </Card>
-      <form onSubmit={handleSubmit} className="flex space-x-xs">
+      <form onSubmit={handleSubmit} className="flex space-x-xs items-end">
+        <label htmlFor="chat-input" className="sr-only">
+          Message
+        </label>
         <input
-          className="flex-grow border border-secondary rounded px-sm py-xs"
+          id="chat-input"
+          className="flex-grow border border-secondary rounded px-sm py-xs focus:ring"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={loading}
