@@ -1,0 +1,3 @@
+.ui-button {
+  @apply border border-secondary rounded px-sm py-xs;
+}
