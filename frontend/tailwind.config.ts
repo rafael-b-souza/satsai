@@ -7,7 +7,19 @@ export default {
     './src/**/*.{ts,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        success: 'var(--color-success)',
+        danger: 'var(--color-danger)',
+      },
+      spacing: {
+        xs: '0.5rem',
+        sm: '1rem',
+        lg: '2rem',
+      },
+    },
   },
   plugins: [],
 } satisfies Config
