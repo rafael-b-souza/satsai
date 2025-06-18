@@ -9,7 +9,7 @@ test('chat history container uses responsive heights', () => {
     </SessionProvider>
   )
   const card = container.querySelector('.ui-card') as HTMLElement
-  expect(card.style.minHeight).toBe('20rem')
-  expect(card.style.maxHeight).toBe('60vh')
-  expect(card.style.overflowY).toBe('auto')
+  expect(card.className).toContain('h-[60vh]')
+  expect(card.className).toContain('md:h-[calc(100vh-13rem)]')
+  expect(card.className).toContain('overflow-y-auto')
 })
