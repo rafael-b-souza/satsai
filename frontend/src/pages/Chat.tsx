@@ -1,4 +1,6 @@
 import { useState, useRef, FormEvent } from 'react'
+import clsx from 'clsx'
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid'
 import { useSession } from '../store'
 import Button from '../components/ui/Button'
 import Card from '../components/ui/Card'
@@ -16,7 +18,10 @@ export default function Chat() {
   const displayRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
-    displayRef.current?.scrollTo(0, displayRef.current.scrollHeight)
+    displayRef.current?.scrollTo({
+      top: displayRef.current.scrollHeight,
+      behavior: 'smooth',
+    })
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -65,34 +70,38 @@ export default function Chat() {
   }
 
   return (
-    <div className="space-y-sm">
+    <div className="flex flex-col h-full space-y-sm">
       <Card
         ref={displayRef}
-        className="min-h-[20rem] max-h-[60vh] overflow-y-auto space-y-xs"
-        style={{ minHeight: '20rem', maxHeight: '60vh', overflowY: 'auto' }}
+        className="h-[60vh] md:h-[calc(100vh-13rem)] overflow-y-auto space-y-xs scroll-smooth"
       >
         {messages.map((m, i) => (
           <p
             key={i}
-            className={m.role === 'user' ? 'text-right' : 'text-left'}
+            className={clsx(
+              'rounded-lg shadow-sm px-3 py-2 max-w-[80%]',
+              m.role === 'user'
+                ? 'ml-auto bg-primary text-secondary'
+                : 'mr-auto bg-secondary text-primary'
+            )}
           >
             {m.content}
           </p>
         ))}
       </Card>
-      <form onSubmit={handleSubmit} className="flex space-x-xs items-end">
+      <form onSubmit={handleSubmit} className="sticky bottom-0 bg-white dark:bg-gray-800 flex space-x-xs p-sm">
         <label htmlFor="chat-input" className="sr-only">
           Message
         </label>
         <input
           id="chat-input"
-          className="flex-grow border border-secondary rounded px-sm py-xs focus:ring"
+          className="flex-1 border border-secondary rounded-lg px-sm py-xs focus:ring"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={loading}
         />
-        <Button type="submit" disabled={loading} className="px-sm">
-          Send
+        <Button type="submit" disabled={loading} aria-label="Send">
+          <PaperAirplaneIcon className="w-5 h-5" />
         </Button>
       </form>
       <p>Balance: {balance} sats</p>

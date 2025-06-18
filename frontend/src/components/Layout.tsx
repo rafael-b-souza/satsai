@@ -24,56 +24,58 @@ export default function Layout() {
   const showNav = desktop || open
 
   return (
-    <div className="min-h-screen bg-primary text-secondary">
-      <header className="p-sm border-b border-secondary flex flex-wrap md:flex-nowrap items-center">
-        <button
-          className="md:hidden mr-auto"
-          aria-label="Toggle menu"
-          onClick={() => setOpen((o) => !o)}
-        >
-          &#9776;
-        </button>
-        <nav
-          className={clsx(
-            'w-full md:w-auto',
-            'md:space-x-4',
-            !desktop && 'space-y-2'
-          )}
-          style={{
-            display: showNav ? 'flex' : 'none',
-            flexDirection: desktop ? 'row' : 'column',
-          }}
-        >
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              clsx(isActive && 'font-bold', 'focus:ring outline-none')
-            }
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-10 border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+        <div className="flex items-center p-sm max-w-screen-md mx-auto">
+          <button
+            className="md:hidden mr-2"
+            aria-label="Toggle menu"
+            onClick={() => setOpen((o) => !o)}
           >
-            Home
-          </NavLink>
-          <NavLink
-            to="/pay"
-            className={({ isActive }) =>
-              clsx(isActive && 'font-bold', 'focus:ring outline-none')
-            }
+            &#9776;
+          </button>
+          <span className="font-bold flex-1">SatsAi</span>
+          <nav
+            className={clsx(
+              'md:flex md:space-x-4',
+              !desktop && 'flex-col space-y-2',
+            )}
+            style={{
+              display: showNav ? 'flex' : 'none',
+              flexDirection: desktop ? 'row' : 'column',
+            }}
           >
-            Pay
-          </NavLink>
-          <NavLink
-            to="/chat"
-            className={({ isActive }) =>
-              clsx(isActive && 'font-bold', 'focus:ring outline-none')
-            }
-          >
-            Chat
-          </NavLink>
-        </nav>
-        <Button onClick={toggleDark} className="px-xs py-xs ml-auto">
-          {dark ? 'Light' : 'Dark'}
-        </Button>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                clsx(isActive && 'font-bold', 'focus:ring outline-none')
+              }
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/pay"
+              className={({ isActive }) =>
+                clsx(isActive && 'font-bold', 'focus:ring outline-none')
+              }
+            >
+              Pay
+            </NavLink>
+            <NavLink
+              to="/chat"
+              className={({ isActive }) =>
+                clsx(isActive && 'font-bold', 'focus:ring outline-none')
+              }
+            >
+              Chat
+            </NavLink>
+          </nav>
+          <Button onClick={toggleDark} className="ml-2 px-xs py-xs">
+            {dark ? 'Light' : 'Dark'}
+          </Button>
+        </div>
       </header>
-      <main className="p-sm">
+      <main className="flex-1 p-sm max-w-screen-md mx-auto w-full">
         <Outlet />
       </main>
     </div>
