@@ -2,16 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  --color-primary: #ffffff;
-  --color-secondary: #374151;
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
+  --color-primary: 255 255 255;
+  --color-secondary: 55 65 81;
+  --color-success: 22 163 74;
+  --color-danger: 220 38 38;
 }
 
 .dark {
-  --color-primary: #111827;
-  --color-secondary: #d1d5db;
-  --color-success: #4ade80;
-  --color-danger: #f87171;
+  --color-primary: 17 24 39;
+  --color-secondary: 209 213 219;
+  --color-success: 74 222 128;
+  --color-danger: 248 113 113;
 }
+
+@layer utilities {
+  .border-secondary {
+    border-color: rgb(var(--color-secondary) / 1);
+  }
+}
+
