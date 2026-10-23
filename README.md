@@ -1,12 +1,14 @@
 # satsai
 
-This project contains a FastAPI backend and a React frontend.
+AI chat application featuring a Lightning Network paywall, built with FastAPI and React.
 
-The frontend now uses Tailwind CSS with dark mode support and React Router for three routes: `/`, `/pay`, and `/chat`. A global session store tracks the current session and balance.
+## Overview
 
-The `/pay` page displays a Lightning invoice using the new `LightningPaywall` component. The component renders a QR code, allows copying the invoice string and polls `/api/v1/payments/invoice/{hash}` until the invoice is paid. Once paid the balance is stored and the user is navigated to the chat page.
+SatsAi allows users to pay for AI chat interactions using Bitcoin over the Lightning Network. Users receive a Lightning invoice via the `/pay` route, which generates a QR code and monitors payment status. Once the invoice is settled, the session balance is credited and access to `/chat` is enabled.
 
-Sessions are now created explicitly via `POST /api/v1/sessions`. The returned ID must be sent with payment and chat requests to track balance usage.
+Key components:
+- **Backend**: FastAPI, SQLAlchemy, Alembic, SQLite/PostgreSQL, LNbits client, OpenAI-compatible chat completion.
+- **Frontend**: React, TypeScript, Tailwind CSS, Vite, Lucide icons, Dark mode support.
 
 ## Environment setup
 
